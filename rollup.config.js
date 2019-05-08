@@ -49,7 +49,6 @@ export default {
       exports: 'named',
       globals: {
         react: 'React',
-        'prop-types': 'PropTypes',
         'final-form': 'FinalForm'
       }
     },
@@ -68,7 +67,9 @@ export default {
     flow(),
     commonjs({ include: 'node_modules/**' }),
     babel({
-      exclude: 'node_modules/**'
+      exclude: 'node_modules/**',
+      plugins: [['@babel/plugin-transform-runtime', { useESModules: !cjs }]],
+      runtimeHelpers: true
     }),
     umd
       ? replace({

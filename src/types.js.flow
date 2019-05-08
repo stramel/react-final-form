@@ -67,8 +67,10 @@ export type FormProps = {
 
 export type FieldProps = {
   allowNull?: boolean,
+  defaultValue?: any,
   format?: (value: any, name: string) => any,
   formatOnBlur?: boolean,
+  initialValue?: any,
   isEqual?: (a: any, b: any) => boolean,
   name: string,
   parse?: (value: any, name: string) => any,

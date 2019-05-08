@@ -59,8 +59,10 @@ class Field extends React.Component<Props, State> {
       this.notify,
       subscription || all,
       {
-        isEqual,
+        defaultValue,
         getValidator: () => this.props.validate,
+        initialValue,
+        isEqual,
         validateFields
       }
     )

@@ -15,7 +15,7 @@
 
 ✅ Opt-in subscriptions - only update on the state you need!
 
-✅ 💥 [**2.9k gzipped**](https://bundlephobia.com/result?p=react-final-form) 💥
+✅ 💥 [**3.0k gzipped**](https://bundlephobia.com/result?p=react-final-form) 💥
 
 ---
 
@@ -114,15 +114,20 @@ const MyForm = () => (
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 - [Videos](#videos)
+- [Helper Libraries](#helper-libraries)
+  - [Define Form and React Define Form](#define-form-and-react-define-form)
+  - [🏁 React Final Form HTML5 Validation](#-react-final-form-html5-validation)
+  - [Final Form Material UI](#final-form-material-ui)
 - [Examples](#examples)
   - [Simple Example](#simple-example)
   - [Synchronous Record-Level Validation](#synchronous-record-level-validation)
   - [Synchronous Field-Level Validation](#synchronous-field-level-validation)
+  - [Synchronous Record-Level Validation (with delayed error render)](#synchronous-record-level-validation-with-delayed-error-render)
   - [Asynchronous Field-Level Validation](#asynchronous-field-level-validation)
   - [Hybrid Synchronous/Asynchronous Record-Level Validation](#hybrid-synchronousasynchronous-record-level-validation)
   - [Submission Errors](#submission-errors)
   - [Third Party Components](#third-party-components)
-  - [Material-UI 1.0](#material-ui-10)
+  - [Material-UI 3.0](#material-ui-30)
   - [💥 Performance Optimization Through Subscriptions 💥](#-performance-optimization-through-subscriptions-)
   - [Independent Error Component](#independent-error-component)
   - [Loading and Initializing Values](#loading-and-initializing-values)
@@ -135,6 +140,7 @@ const MyForm = () => (
   - [Wizard Form](#wizard-form)
   - [Parse and Format (and Normalize)](#parse-and-format-and-normalize)
   - [Auto-Save with Debounce](#auto-save-with-debounce)
+  - [Auto-Save with Selective Debounce](#auto-save-with-selective-debounce)
   - [Auto-Save on Field Blur](#auto-save-on-field-blur)
   - [Custom Validation Engine](#custom-validation-engine)
   - [Loading, Normalizing, Saving, and Reinitializing](#loading-normalizing-saving-and-reinitializing)
@@ -150,6 +156,7 @@ const MyForm = () => (
   - [AsyncTypeahead and Redux](#asynctypeahead-and-redux)
   - [Format On Blur](#format-on-blur)
   - [Styling with 🍭 Smooth-UI](#styling-with--smooth-ui)
+  - [CLI Example 🤯](#cli-example-)
 - [Rendering](#rendering)
 - [API](#api)
   - [`Field : React.ComponentType<FieldProps>`](#field--reactcomponenttypefieldprops)
@@ -161,14 +168,16 @@ const MyForm = () => (
     - [`allowNull?: boolean`](#allownull-boolean)
     - [`children?: ((props: FieldRenderProps) => React.Node) | React.Node`](#children-props-fieldrenderprops--reactnode--reactnode)
     - [`component?: React.ComponentType<FieldRenderProps> | string`](#component-reactcomponenttypefieldrenderprops--string)
+    - [`defaultValue?: any`](#defaultvalue-any)
     - [`format?: ((value: any, name: string) => any) | null`](#format-value-any-name-string--any--null)
     - [`formatOnBlur?: boolean`](#formatonblur-boolean)
+    - [`initialValue?: any`](#initialvalue-any)
     - [`isEqual?: (a: any, b: any) => boolean`](#isequal-a-any-b-any--boolean)
     - [`name: string`](#name-string)
     - [`parse?: ((value: any, name: string) => any) | null`](#parse-value-any-name-string--any--null)
     - [`render?: (props: FieldRenderProps) => React.Node`](#render-props-fieldrenderprops--reactnode)
     - [`subscription?: FieldSubscription`](#subscription-fieldsubscription)
-    - [`validate?: (value: ?any, allValues: Object, meta: FieldState) => ?any`](#validate-value-any-allvalues-object-meta-fieldstate--any)
+    - [`validate?: (value: ?any, allValues: Object, meta: ?FieldState) => ?any`](#validate-value-any-allvalues-object-meta-fieldstate--any)
     - [`validateFields?: string[]`](#validatefields-string)
     - [`value?: any`](#value-any)
   - [`FieldRenderProps`](#fieldrenderprops)
@@ -183,6 +192,7 @@ const MyForm = () => (
     - [`meta.error?: any`](#metaerror-any)
     - [`meta.initial?: any`](#metainitial-any)
     - [`meta.invalid?: boolean`](#metainvalid-boolean)
+    - [`meta.modified?: boolean`](#metamodified-boolean)
     - [`meta.pristine?: boolean`](#metapristine-boolean)
     - [`meta.submitError?: any`](#metasubmiterror-any)
     - [`meta.submitFailed?: boolean`](#metasubmitfailed-boolean)
@@ -238,11 +248,25 @@ const MyForm = () => (
 
 ## Videos
 
-| [![🏁Final Form: Form state management via Observers - HolyJS 2018, Moscow, Russia](https://github.com/final-form/react-final-form/raw/master/docs/HolyJS2018.gif)](https://youtu.be/fxEW4jgoX-4) |
-| :----------------------------------------------------------: |
-| **🏁 Final Form: Form state management via Observers - HolyJS 2018, Moscow, Russia** |
+|       [![🏁Final Form: Form state management via Observers - HolyJS 2018, Moscow, Russia](https://github.com/final-form/react-final-form/raw/master/docs/HolyJS2018.gif)](https://youtu.be/fxEW4jgoX-4)        |
+| :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|                                                              **🏁 Final Form: Form state management via Observers - HolyJS 2018, Moscow, Russia**                                                              |
 | [![Next Generation Forms with 🏁 React Final Form – React Alicante 2018, Alicante, Spain](https://github.com/final-form/react-final-form/raw/master/docs/ReactAlicante2018.gif)](https://youtu.be/WoSzy-4mviQ) |
-| **Next Generation Forms with 🏁 React Final Form – React Alicante 2018, Alicante, Spain** |
+|                                                           **Next Generation Forms with 🏁 React Final Form – React Alicante 2018, Alicante, Spain**                                                            |
+
+## Helper Libraries
+
+### [Define Form](https://github.com/ForbesLindesay/define-form/tree/master/packages/define-form) and [React Define Form](https://github.com/ForbesLindesay/define-form/tree/master/packages/react-define-form)
+
+Define Form offers alternative typescript bindings for 🏁 Final Form. The key difference is that _the form data is now a strongly typed object_, rather than an `any`. This makes the `initialValues` config option required.
+
+### [🏁 React Final Form HTML5 Validation](https://github.com/final-form/react-final-form-html5-validation)
+
+A swap-in replacement for 🏁 React Final Form's `<Field>` component to provide HTML5 Validation.
+
+### [Final Form Material UI](https://github.com/Deadly0/final-form-material-ui#readme)
+
+A set of adaptor components to facilitate using Material-UI with 🏁 React Final Form.
 
 ## Examples
 
@@ -260,6 +284,10 @@ errors next to fields using child render functions.
 
 Introduces field-level validation functions and demonstrates how to display
 errors next to fields using child render functions.
+
+### [Synchronous Record-Level Validation (with delayed error render)](https://codesandbox.io/s/z2zqr008pm)
+
+Sometimes you want to give your user a chance to make it through a brief invalid value on their way to a valid one, e.g. a date string that needs two numbers on either side of a slash. With a simple delayed rendering component, this becomes easy. Plus, the error will disappear immediately when the user fixes the problem.
 
 ### [Asynchronous Field-Level Validation](https://codesandbox.io/s/wy7z7q5zx5)
 
@@ -285,9 +313,9 @@ Demonstrates how easy it is to use third party input components. All the third
 party component really needs is `value` and `onChange`, but more complex
 components can accept things like errors.
 
-### [Material-UI 1.0](https://codesandbox.io/s/2z5y03y81r)
+### [Material-UI 3.0](https://codesandbox.io/s/9ywq085k9w)
 
-Demonstrates how to use Material-UI 1.0 input components.
+Demonstrates how to use Material-UI 3.0 input components.
 
 ### 💥 [Performance Optimization Through Subscriptions](https://codesandbox.io/s/32r824vxy1) 💥
 
@@ -330,7 +358,7 @@ decorator to achieve realtime field calculations through easily defined rules.
 
 Demonstrates how the power of subscriptions and mutators can be used to build a
 warning engine: logic to display a message next to each field that is _not_ an
-error that prevents form submission.
+error (thus it does _not_ prevent form submission).
 
 ### [Reusable Field Groups](https://codesandbox.io/s/8z5jm6x80)
 
@@ -354,6 +382,10 @@ Demonstrates how to use 🏁 React Final Form's `parse` and `format` props to co
 ### [Auto-Save with Debounce](https://codesandbox.io/s/5w4yrpyo7k)
 
 Demonstrates how to use a `FormSpy` component to listen for value changes and automatically submit different values after a debounce period.
+
+### [Auto-Save with Selective Debounce](https://codesandbox.io/s/98j0v46zj4)
+
+Demonstrates how to use a `FormSpy` component to listen for value changes and automatically submit different values after a debounce period, but only does the debounce for certain specified fields, in this case, all the text fields.
 
 ### [Auto-Save on Field Blur](https://codesandbox.io/s/7k742qpo36)
 
@@ -415,6 +447,10 @@ Demonstrates how to use the `formatOnBlur` prop to postpone the formatting of a 
 
 Demonstrates how to use the Smooth-UI styling library to make your forms look fabulous! All you really need is a higher order component that adapts The 🍭 Smooth-UI form controls to work with 🏁 React Final Form.
 
+### [CLI Example](https://github.com/final-form/rff-cli-example) 🤯
+
+Yes! You can actually use 🏁 React Final Form in a command line interface! Thanks to packages like [Ink](https://github.com/vadimdemedes/ink) and [Pastel](https://github.com/vadimdemedes/pastel), the power of 🏁 Final Form's form state management works just fine on the command line.
+
 ## Rendering
 
 There are three ways to tell `<Form/>` and `<Field/>` what to render:
@@ -472,8 +508,14 @@ as any non-API props passed into the `<Field/>` component.
 
 #### `component?: React.ComponentType<FieldRenderProps> | string`
 
-A component that is given [`FieldRenderProps`](#fieldrenderprops) as props, as
+A component that is given [`FieldRenderProps`](#fieldrenderprops) as props, children and render props, as
 well as any non-API props passed into the `<Field/>` component.
+
+#### `defaultValue?: any`
+
+⚠️ You probably want `initialValue`! ⚠️
+
+_**Before using this prop, read and understand the 🏁 Final Form documentation on [`initialValue`](https://github.com/final-form/final-form#initialvalue-any) and [`defaultValue`](https://github.com/final-form/final-form#defaultvalue-any)!**_
 
 #### `format?: ((value: any, name: string) => any) | null`
 
@@ -484,6 +526,10 @@ A function that takes the value from the form values and the name of the field a
 #### `formatOnBlur?: boolean`
 
 If `true`, the `format` function will only be called when the field is blurred. If `false`, `format` will be called on every render. Defaults to `false`.
+
+#### `initialValue?: any`
+
+[See the 🏁 Final Form docs on `initialValue`](https://github.com/final-form/final-form# #initialvalue-any)
 
 #### `isEqual?: (a: any, b: any) => boolean`
 
@@ -501,7 +547,7 @@ A function that takes the value from the input and name of the field and convert
 
 #### `render?: (props: FieldRenderProps) => React.Node`
 
-A render function that is given [`FieldRenderProps`](#fieldrenderprops), as well
+A render function that is given [`FieldRenderProps`](#fieldrenderprops), children prop, as well
 as any non-API props passed into the `<Field/>` component.
 
 #### `subscription?: FieldSubscription`
@@ -513,7 +559,7 @@ that selects all of the items of
 wish to update for. If you don't pass a `subscription` prop, it defaults to
 _all_ of [`FieldState`](https://github.com/final-form/final-form#fieldstate).
 
-#### `validate?: (value: ?any, allValues: Object, meta: FieldState) => ?any`
+#### `validate?: (value: ?any, allValues: Object, meta: ?FieldState) => ?any`
 
 A function that takes the field value, all the values of the form and the `meta` data about the field and
 returns an error if the value is invalid, or `undefined` if the value is valid.
@@ -591,6 +637,10 @@ The current value of the field.
 #### `meta.invalid?: boolean`
 
 [See the 🏁 Final Form docs on `invalid`](https://github.com/final-form/final-form#invalid-boolean).
+
+#### `meta.modified?: boolean`
+
+[See the 🏁 Final Form docs on `modified`](https://github.com/final-form/final-form#modified-boolean).
 
 #### `meta.pristine?: boolean`
 
