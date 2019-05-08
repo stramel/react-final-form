@@ -7,6 +7,7 @@
   "module": "dist/react-final-form.es.js",
   "typings": "typescript/index.d.ts",
   "files": [
+    "src",
     "dist",
     "scripts",
     "typescript"
